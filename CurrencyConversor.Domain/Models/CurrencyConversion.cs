@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using CurrencyConversor.Domain.Abstraction;
 using CurrencyConversor.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -15,8 +16,6 @@ namespace CurrencyConversor.Domain.Models
         {
             this.currenciesService = currenciesService;
             this.logger = logger;
-
-            SetConversionStatus(ConversionStatus.NotSet);
         }
 
         public Currency FromCurrency { get; private set; }
@@ -25,7 +24,7 @@ namespace CurrencyConversor.Domain.Models
 
         public decimal FromValue { get; private set; }
 
-        public ConversionStatus ConversionStatus { get; private set; }
+        public ConversionStatus ConversionStatus { get; private set; } = ConversionStatus.NotSet;
 
         public decimal? ConversionValue { get; private set; }
 
@@ -47,7 +46,7 @@ namespace CurrencyConversor.Domain.Models
             ConversionStatus = newStatus;
         }
 
-        public async Task ExecuteConversion()
+        public async Task<ConversionTransaction> ExecuteConversion()
         {
             try
             {
@@ -60,24 +59,28 @@ namespace CurrencyConversor.Domain.Models
                 CalculateConversionValue();
 
                 SetConversionStatus(ConversionStatus.ConversionDone);
+
+                return SucessTransaction.CreateNew(this);
             }
             catch (Exception ex)
             {
-                logger.LogError("Could not convert currencies using FromValue: {FromValue}, FromCurrency: {FromCurrency.Code} and ToCurrency: {ToCurrency.Code}", ex);
+                LogConversionError(ex);
                 SetConversionStatus(ConversionStatus.ErrorInConversion);
+
+                return FailureTransaction.CreateNew(this, ex.Message);
             }
         }
 
         private void VerifyPreConversionStatus()
         {
             if (ConversionStatus != ConversionStatus.PreparedForConversion)
-                throw new InvalidOleVariantTypeException($"Data is not prepared for conversion. Status: {ConversionStatus}.");
+                throw new InvalidOperationException($"Data is not prepared for conversion. Status: {ConversionStatus}.");
         }
 
-        private void VerifyPostConversionStatus()
+        private void LogConversionError(Exception ex)
         {
-            if (ConversionStatus != ConversionStatus.ConversionDone)
-                throw new InvalidOleVariantTypeException($"Conversion is not done. Status: {ConversionStatus}.");
+            logger.LogError($"Could not convert currencies using FromValue: {FromValue}, "
+                            + $"FromCurrency: {FromCurrency.Code} and ToCurrency: {ToCurrency.Code}", ex);
         }
 
         private void CalculateConversionValue()

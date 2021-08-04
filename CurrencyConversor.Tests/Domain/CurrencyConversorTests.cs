@@ -11,8 +11,8 @@ namespace CurrencyConversor.Tests.Domain
 {
     public class CurrencyConversorTests
     {
-        public Mock<IExternalCurrenciesService> externalCurrenciesServiceMock;
-        public ILogger<CurrencyConversion> logger;
+        private readonly Mock<IExternalCurrenciesService> externalCurrenciesServiceMock;
+        private readonly ILogger<CurrencyConversion> logger;
 
         public CurrencyConversorTests()
         {
@@ -73,6 +73,17 @@ namespace CurrencyConversor.Tests.Domain
             Assert.Equal(fromValue * conversionRate, currencyConversion.ConversionValue);
             Assert.Equal(conversionRate, currencyConversion.ConversionRate);
             Assert.Equal(ConversionStatus.ConversionDone, currencyConversion.ConversionStatus);
+        }
+
+        [Fact]
+        public async Task Try_convert_currency_with_no_preparation()
+        {
+            //Act and Assert
+            var currencyConversion = new CurrencyConversion(externalCurrenciesServiceMock.Object, logger);
+
+            var result = await currencyConversion.ExecuteConversion();
+
+            Assert.IsAssignableFrom<FailureTransaction>(result);
         }
     }
 }
