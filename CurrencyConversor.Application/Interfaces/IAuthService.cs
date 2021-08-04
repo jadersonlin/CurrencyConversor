@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CurrencyConversor.Application.Interfaces
 {
-    public interface ICurrenciesService
+    public  interface IAuthService
     {
-
+        Task UserExists(string userId);
     }
 }

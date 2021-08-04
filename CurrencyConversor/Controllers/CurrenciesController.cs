@@ -17,6 +17,11 @@ namespace CurrencyConversor.API.Controllers
             this.logger = logger;
         }
 
+        [HttpGet]
+        public Task<ActionResult<GetConversionResult>> GetAvailableCurrencies(decimal value, string fromCurrency, string toCurrency, string userId)
+        {
+            throw new NotImplementedException();
+        }
 
         [HttpGet]
         [Route("conversion")]

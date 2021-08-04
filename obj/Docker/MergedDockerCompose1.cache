@@ -3,43 +3,20 @@ services:
     build:
       context: C:\Users\dell\Documents\Visual Studio 2019\Projects\CurrencyConversor
       dockerfile: CurrencyConversor/Dockerfile
-      labels:
-        com.microsoft.created-by: visual-studio
-        com.microsoft.visual-studio.project-name: CurrencyConversor.API
-      target: base
-    container_name: CurrencyConversor.API
     depends_on:
       mongo:
         condition: service_started
       mongo-express:
         condition: service_started
-    entrypoint: tail -f /dev/null
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
       ASPNETCORE_URLS: https://+:443;http://+:80
-      DOTNET_USE_POLLING_FILE_WATCHER: '1'
-      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages
-    image: currencyconversorapi:dev
-    labels:
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
-        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net5.0/CurrencyConversor.API.dll"'
-      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
-        dotnet); then kill $$PID; fi"
-      com.microsoft.visualstudio.debuggee.program: dotnet
-      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    image: currencyconversorapi
     ports:
     - target: 80
     - target: 443
-    tty: true
     volumes:
-    - C:\Users\dell\Documents\Visual Studio 2019\Projects\CurrencyConversor\CurrencyConversor:/app:rw
-    - C:\Users\dell\vsdbg\vs2017u5:/remote_debugger:rw
     - C:\Users\dell\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
-    - C:\Users\dell\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
-    - C:\Program Files\dotnet\sdk\NuGetFallbackFolder:/root/.nuget/fallbackpackages:ro
-    - C:\Users\dell\.nuget\packages:/root/.nuget/packages:ro
-    - C:\Users\dell\Documents\Visual Studio 2019\Projects\CurrencyConversor:/src:rw
   mongo:
     environment:
       MONGO_INITDB_ROOT_PASSWORD: example

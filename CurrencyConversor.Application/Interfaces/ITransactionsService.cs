@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using CurrencyConversor.Application.Dtos;
 using System.Threading.Tasks;
 
 namespace CurrencyConversor.Application.Interfaces
 {
     public interface ITransactionsService
     {
+        Task<GetTransactionsResult> GetAllTransactions();
     }
 }
