@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using CurrencyConversor.Application.Dtos;
+﻿using CurrencyConversor.Application.Dtos;
+using CurrencyConversor.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace CurrencyConversor.API.Controllers
 {
@@ -10,24 +10,40 @@ namespace CurrencyConversor.API.Controllers
     [Route("api/currencies")]
     public class CurrenciesController : ControllerBase
     {
+        private readonly IConversionTransactionService conversionTransactionService;
+        private readonly ICurrenciesService currenciesService;
         private readonly ILogger<CurrenciesController> logger;
 
-        public CurrenciesController(ILogger<CurrenciesController> logger)
+        public CurrenciesController(IConversionTransactionService conversionTransactionService,
+                                    ICurrenciesService currenciesService,
+                                    ILogger<CurrenciesController> logger)
         {
+            this.conversionTransactionService = conversionTransactionService;
+            this.currenciesService = currenciesService;
             this.logger = logger;
         }
 
         [HttpGet]
-        public Task<ActionResult<GetConversionResult>> GetAvailableCurrencies(decimal value, string fromCurrency, string toCurrency, string userId)
+        public async Task<ActionResult<GetConversionResult>> GetAvailableCurrencies()
         {
-            throw new NotImplementedException();
+            var result = await currenciesService.GetAvailableCurrencies();
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         [HttpGet]
         [Route("conversion")]
-        public Task<ActionResult<GetConversionResult>> GetConversion(decimal value, string fromCurrency, string toCurrency, string userId)
+        public async Task<ActionResult<GetConversionResult>> GetConversion(decimal fromValue, string fromCurrency, string toCurrency, string userId)
         {
-            throw new NotImplementedException();
+            var result = await conversionTransactionService.RequestConversion(fromCurrency, toCurrency, fromValue, userId);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
     }
 }

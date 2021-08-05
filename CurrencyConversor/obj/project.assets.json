@@ -13,6 +13,15 @@
           "buildMultiTargeting/Microsoft.Extensions.ApiDescription.Server.targets": {}
         }
       },
+      "Microsoft.Extensions.Logging.Abstractions/5.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
       "Microsoft.OpenApi/1.2.3": {
         "type": "package",
         "compile": {
@@ -86,11 +95,27 @@
       "CurrencyConversor.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "CurrencyConversor.Domain": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/CurrencyConversor.Application.dll": {}
         },
         "runtime": {
           "bin/placeholder/CurrencyConversor.Application.dll": {}
+        }
+      },
+      "CurrencyConversor.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "5.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CurrencyConversor.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CurrencyConversor.Domain.dll": {}
         }
       }
     }
@@ -121,6 +146,26 @@
         "tools/netcoreapp2.1/GetDocument.Insider.deps.json",
         "tools/netcoreapp2.1/GetDocument.Insider.dll",
         "tools/netcoreapp2.1/GetDocument.Insider.runtimeconfig.json"
+      ]
+    },
+    "Microsoft.Extensions.Logging.Abstractions/5.0.0": {
+      "sha512": "NxP6ahFcBnnSfwNBi2KH2Oz8Xl5Sm2krjId/jRR3I7teFphwiUoUeZPwTNA21EX+5PtjqmyAvKaOeBXcJjcH/w==",
+      "type": "package",
+      "path": "microsoft.extensions.logging.abstractions/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net461/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
+        "microsoft.extensions.logging.abstractions.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "Microsoft.OpenApi/1.2.3": {
@@ -286,6 +331,11 @@
       "type": "project",
       "path": "../CurrencyConversor.Application/CurrencyConversor.Application.csproj",
       "msbuildProject": "../CurrencyConversor.Application/CurrencyConversor.Application.csproj"
+    },
+    "CurrencyConversor.Domain/1.0.0": {
+      "type": "project",
+      "path": "../CurrencyConversor.Domain/CurrencyConversor.Domain.csproj",
+      "msbuildProject": "../CurrencyConversor.Domain/CurrencyConversor.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {

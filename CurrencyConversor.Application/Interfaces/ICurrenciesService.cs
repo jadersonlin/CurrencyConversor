@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace CurrencyConversor.Application.Interfaces
 {
-    public interface IConversionTransactionsService
+    public interface ICurrenciesService
     {
-        Task<GetTransactionsResult> GetAllTransactions();
+        Task<GetAllCurrenciesResult> GetAvailableCurrencies();
     }
 }

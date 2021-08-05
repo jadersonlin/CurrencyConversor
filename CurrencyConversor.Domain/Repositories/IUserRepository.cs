@@ -3,7 +3,7 @@ using CurrencyConversor.Domain.Models;
 
 namespace CurrencyConversor.Domain.Repositories
 {
-    public interface IAuthRepository
+    public interface IUserRepository
     {
         Task<bool> AnyUserExists();
         Task<bool> Exists(string userId);

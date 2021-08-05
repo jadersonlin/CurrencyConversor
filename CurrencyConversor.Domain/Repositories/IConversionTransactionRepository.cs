@@ -1,6 +1,6 @@
-﻿using CurrencyConversor.Domain.Abstraction;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CurrencyConversor.Domain.Abstractions;
 
 namespace CurrencyConversor.Domain.Repositories
 {
@@ -8,8 +8,6 @@ namespace CurrencyConversor.Domain.Repositories
     {
         Task<bool> Insert(T transaction);
 
-        Task<IList<T>> GetSuccessTransactions();
-
-        Task<IList<T>> GetFailureTransactions();
+        Task<IList<T>> GetTransactions();
     }
 }
