@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CurrencyConversor.Application.Interfaces
+namespace CurrencyConversor.Application
 {
-    public interface ITransactionsService
+    class Mapper
     {
     }
 }
