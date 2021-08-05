@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "5hjl5PhSonD+fYTX6rTQdmFL/cNzV5jKjfJ5kP8E4K/JlwYZ6Fo5aqRAhHpdKo4xy8qGq37uSEzaVPXwVyi9zA==",
+  "dgSpecHash": "Et4LiIayojXhHqXordHh/O/zb6HgIebZwZqyetEB4MSZvGb0hZIBjkqQ0eyNr8s+LuO0ljbJEmNjiDhbeNnfiA==",
   "success": true,
   "projectFilePath": "C:\\Users\\dell\\Documents\\Visual Studio 2019\\Projects\\CurrencyConversor\\CurrencyConversor\\CurrencyConversor.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dell\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\dell\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\dell\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\dell\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.14\\microsoft.visualstudio.azure.containers.tools.targets.1.10.14.nupkg.sha512",
     "C:\\Users\\dell\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",

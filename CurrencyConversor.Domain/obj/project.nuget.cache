@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1nWoLwzE6K2aeXrwNoshnIWlH0DyK6tYUqhfi/7NSoJ4PexpCMdoSHd0jMNI6A4z2qNWWspgdiRl7DKS2/HJaA==",
+  "dgSpecHash": "qER7uuEd1uOoiDzQvb3pSd7W1hD8hqSqNratSj8D7WpS57PAWj3jNXVce1XWxSnTYsBlo2im1FJyigrHFoiIVA==",
   "success": true,
   "projectFilePath": "C:\\Users\\dell\\Documents\\Visual Studio 2019\\Projects\\CurrencyConversor\\CurrencyConversor.Domain\\CurrencyConversor.Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\dell\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
