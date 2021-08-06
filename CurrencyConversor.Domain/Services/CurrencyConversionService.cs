@@ -113,7 +113,6 @@ namespace CurrencyConversor.Domain.Services
             {
                 Id = Guid.NewGuid().ToString(),
                 FromValue = fromValue,
-                ConversionValue = conversionValue.Value,
                 ConversionRate = conversionRate.Value,
                 ToCurrency = toCurrency.Code,
                 FromCurrency = fromCurrency.Code,

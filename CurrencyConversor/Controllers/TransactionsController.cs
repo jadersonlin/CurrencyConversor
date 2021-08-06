@@ -1,11 +1,8 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using CurrencyConversor.Application.Dtos;
+﻿using CurrencyConversor.Application.Dtos;
 using CurrencyConversor.Application.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace CurrencyConversor.API.Controllers
 {
@@ -29,6 +26,22 @@ namespace CurrencyConversor.API.Controllers
         public async Task<ActionResult<GetAllSuccessTransactionsResult>> GetSuccessTransactions()
         {
             var result = await conversionTransactionService.GetAllSuccessfulTransactions();
+
+            if (result == null)
+            {
+                logger.LogWarning("Transactions not found in " + nameof(GetSuccessTransactions));
+
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("failures")]
+        public async Task<ActionResult<GetAllFailureTransactionsResult>> GetFailureTransactions()
+        {
+            var result = await conversionTransactionService.GetAllFailedTransactions();
 
             if (result == null)
                 return NotFound();
