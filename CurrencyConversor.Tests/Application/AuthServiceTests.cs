@@ -1,9 +1,8 @@
 ﻿using CurrencyConversor.Application.Impl;
 using CurrencyConversor.Domain.Repositories;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,12 +11,9 @@ namespace CurrencyConversor.Tests.Application
     public class AuthServiceTests
     {
         private readonly Mock<IUserRepository> userRepositoryMock;
-        private readonly ILogger<AuthService> logger;
 
         public AuthServiceTests()
         {
-            ILoggerFactory nullLoggerFactory = new NullLoggerFactory();
-            logger = nullLoggerFactory.CreateLogger<AuthService>();
             userRepositoryMock = new Mock<IUserRepository>();
         }
 
@@ -28,12 +24,9 @@ namespace CurrencyConversor.Tests.Application
             var userId = Guid.NewGuid().ToString();
             userRepositoryMock.Setup(_ => _.Exists(userId)).ReturnsAsync(true);
 
-            //Act
-            var authService = new AuthService(userRepositoryMock.Object, logger);
-            var result = await authService.UserExists(userId);
-
-            //Assert
-            Assert.True(result);
+            //Act and Assert
+            var authService = new AuthService(userRepositoryMock.Object);
+            await Assert.IsAssignableFrom<Task>(authService.ValidateUser(userId));
         }
 
         [Fact]
@@ -44,10 +37,24 @@ namespace CurrencyConversor.Tests.Application
             userRepositoryMock.Setup(_ => _.Exists(userId)).ThrowsAsync(new TimeoutException());
 
             //Act
-            var authService = new AuthService(userRepositoryMock.Object, logger);
+            var authService = new AuthService(userRepositoryMock.Object);
 
             //Assert
-            await Assert.ThrowsAsync<TimeoutException>(() => authService.UserExists(userId));
+            await Assert.ThrowsAsync<TimeoutException>(() => authService.ValidateUser(userId));
+        }
+
+        [Fact]
+        public async Task Try_verify_user_exists_false()
+        {
+            //Arrange
+            var userId = Guid.NewGuid().ToString();
+            userRepositoryMock.Setup(_ => _.Exists(userId)).ReturnsAsync(false);
+
+            //Act
+            var authService = new AuthService(userRepositoryMock.Object);
+
+            //Assert
+            await Assert.ThrowsAsync<HttpRequestException>(() => authService.ValidateUser(userId));
         }
     }
 }

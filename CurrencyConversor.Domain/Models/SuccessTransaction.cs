@@ -10,8 +10,6 @@ namespace CurrencyConversor.Domain.Models
             ConversionStatus = ConversionStatus.ConversionDone;
         }
 
-        public decimal ConversionValue { get; set; }
-
         public decimal ConversionRate { get; set; }
     }
 }
