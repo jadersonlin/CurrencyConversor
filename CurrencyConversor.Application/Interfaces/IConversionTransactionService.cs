@@ -7,6 +7,6 @@ namespace CurrencyConversor.Application.Interfaces
     {
         Task<GetAllSuccessTransactionsResult> GetAllSuccessfulTransactions();
         Task<GetAllFailureTransactionsResult> GetAllFailedTransactions();
-        Task<GetConversionResult> RequestConversion(string fromCurrency, string toCurrency, decimal fromValueParam, string userIdParam);
+        Task<GetConversionResult> RequestConversion(string fromCurrency, string toCurrency, decimal fromValue, string userId);
     }
 }

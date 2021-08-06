@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 
 namespace CurrencyConversor.Domain.Repositories
 {
-    public interface ICurrenciesRepository
+    public interface ICurrencyRepository
     {
         Task<IList<Currency>> GetAll();
 
-        Task<bool> InsertMany();
+        Task<Currency> Get(string code);
+
+        Task<bool> InsertMany(IList<Currency> currencies);
     }
 }

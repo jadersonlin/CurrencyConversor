@@ -55,12 +55,8 @@ namespace CurrencyConversor.Tests.Domain
 
             var successTransaction = (SuccessTransaction)result;
 
-            Assert.Equal(fromValue * conversionRate, successTransaction.ConversionValue);
-            Assert.Equal(conversionRate, successTransaction.ConversionRate);
             Assert.Equal(ConversionStatus.ConversionDone, successTransaction.ConversionStatus);
             Assert.NotNull(successTransaction.Id);
-            Assert.NotNull(successTransaction.ConversionRate);
-            Assert.NotNull(successTransaction.ConversionValue);
             Assert.NotNull(successTransaction.ConversionTimestamp);
             Assert.NotNull(successTransaction.FromCurrency);
             Assert.NotNull(successTransaction.ToCurrency);

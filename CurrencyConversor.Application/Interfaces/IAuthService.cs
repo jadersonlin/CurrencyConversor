@@ -4,6 +4,6 @@ namespace CurrencyConversor.Application.Interfaces
 {
     public  interface IAuthService
     {
-        Task<bool> UserExists(string userId);
+        Task ValidateUser(string userId);
     }
 }

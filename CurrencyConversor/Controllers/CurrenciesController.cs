@@ -24,14 +24,11 @@ namespace CurrencyConversor.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<GetConversionResult>> GetAvailableCurrencies()
+        public async Task<ActionResult<GetAllCurrenciesResult>> Get()
         {
             var result = await currenciesService.GetAvailableCurrencies();
 
-            if (result == null)
-                return NotFound();
-
-            return Ok(result);
+            return result != null ? Ok(result) : NotFound(nameof(Get));
         }
 
         [HttpGet]
@@ -40,10 +37,13 @@ namespace CurrencyConversor.API.Controllers
         {
             var result = await conversionTransactionService.RequestConversion(fromCurrency, toCurrency, fromValue, userId);
 
-            if (result == null)
-                return NotFound();
+            return result != null ? Ok(result) : NotFound(nameof(GetConversion));
+        }
 
-            return Ok(result);
+        private ActionResult NotFound(string actionName) 
+        {
+            logger.LogWarning("Conversion not returned in " + actionName);
+            return NotFound();
         }
     }
 }

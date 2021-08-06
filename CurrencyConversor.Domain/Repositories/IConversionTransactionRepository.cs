@@ -6,7 +6,7 @@ namespace CurrencyConversor.Domain.Repositories
 {
     public interface IConversionTransactionRepository<T> where T : ConversionTransaction
     {
-        Task<bool> Insert(T transaction);
+        Task Insert(T transaction);
 
         Task<IList<T>> GetTransactions();
     }
