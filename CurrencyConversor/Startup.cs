@@ -1,3 +1,6 @@
+using CurrencyConversor.Domain.Models;
+using CurrencyConversor.Domain.Repositories;
+using CurrencyConversor.Infraestructure.MongoDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +37,11 @@ namespace CurrencyConversor.API
                     }
                 });
             });
+
+            services.AddScoped<ICurrencyContext, CurrencyContext>();
+            services.AddScoped<ICurrencyRepository, CurrencyMongoDbRepository>();
+            services.AddScoped(typeof(IConversionTransactionRepository<SuccessTransaction>), typeof(SuccessTransactionMongoDbRepository<SuccessTransaction>));
+            services.AddScoped(typeof(IConversionTransactionRepository<FailureTransaction>), typeof(FailureTransactionMongoDbRepository<FailureTransaction>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

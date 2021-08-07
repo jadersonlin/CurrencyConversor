@@ -10,6 +10,6 @@ namespace CurrencyConversor.Domain.Repositories
 
         Task<Currency> Get(string code);
 
-        Task<bool> InsertMany(IList<Currency> currencies);
+        Task InsertMany(IList<Currency> currencies);
     }
 }
