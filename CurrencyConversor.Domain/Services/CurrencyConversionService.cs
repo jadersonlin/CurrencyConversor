@@ -22,7 +22,6 @@ namespace CurrencyConversor.Domain.Services
         private Currency fromCurrency;
         private Currency toCurrency;
         private decimal fromValue;
-        private decimal? conversionValue;
         private decimal? conversionRate;
         private long? conversionTimestamp;
         private string userId;
@@ -60,8 +59,6 @@ namespace CurrencyConversor.Domain.Services
                 conversionRate = conversionData.ConversionRate;
                 conversionTimestamp = conversionData.ConversionTimestamp;
                 
-                CalculateConversionValue();
-
                 return GetSuccessTransaction();
             }
             catch (Exception ex)
@@ -72,16 +69,10 @@ namespace CurrencyConversor.Domain.Services
             }
         }
 
-
         private void VerifyPreConversionStatus()
         {
             if (ConversionStatus != ConversionStatus.PreparedForConversion)
                 throw new InvalidOperationException($"Data is not prepared for conversion. Status: {ConversionStatus}.");
-        }
-
-        private void CalculateConversionValue()
-        {
-            conversionValue = conversionRate * fromValue;
         }
 
         private void LogConversionError(Exception ex)

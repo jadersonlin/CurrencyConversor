@@ -1,4 +1,6 @@
-﻿namespace CurrencyConversor.Domain.Models
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace CurrencyConversor.Domain.Models
 {
     public  class Currency
     {
@@ -8,8 +10,10 @@
             Name = name;
         }
 
+        [BsonId]
         public string Code { get; }
 
+        [BsonElement("Name")]
         public string Name { get; }
 
         public override bool Equals(object obj)
