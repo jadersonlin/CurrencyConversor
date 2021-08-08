@@ -38,8 +38,7 @@ namespace CurrencyConversor.Tests.Application
         [Fact]
         public async Task Can_get_failed_transactions()
         {
-            //Arrenge
-
+            //Arrange
             var failureTransactions = new List<FailureTransaction>
             {
                 new FailureTransaction
@@ -152,7 +151,6 @@ namespace CurrencyConversor.Tests.Application
             currencyConversionServiceMock.Setup(_ => _.Convert(dollar, reais, fromValue, userId)).ReturnsAsync(successTransaction);
 
             //Act
-
             var conversionTransactionService = new ConversionTransactionService(currencyConversionServiceMock.Object, authServiceMock.Object,
                 currenciesRepositoryMock.Object, successTransactionRepositoryMock.Object, failureTransactionRepositoryMock.Object, logger);
 
@@ -163,7 +161,7 @@ namespace CurrencyConversor.Tests.Application
 
             Assert.Equal(successTransaction.Id, result.Id);
             Assert.Equal(successTransaction.ConversionRate, result.ConversionRate);
-            Assert.Equal(new DateTime(successTransaction.ConversionTimestamp.Value), result.ConversionTimestamp);
+            Assert.Equal(DateTime.FromFileTimeUtc(successTransaction.ConversionTimestamp.Value), result.ConversionTimestamp);
             Assert.Equal(successTransaction.FromCurrency, result.FromCurrency);
             Assert.Equal(successTransaction.FromValue, result.FromValue);
             Assert.Equal(successTransaction.ToCurrency, result.ToCurrency);
