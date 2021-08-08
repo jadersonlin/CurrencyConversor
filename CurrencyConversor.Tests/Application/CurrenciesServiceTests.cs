@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CurrencyConversor.Application.Dtos;
+﻿using CurrencyConversor.Application.Dtos;
 using CurrencyConversor.Application.Impl;
 using CurrencyConversor.Domain.Models;
 using CurrencyConversor.Domain.Repositories;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CurrencyConversor.Tests.Application
 {
     public class CurrenciesServiceTests
     {
-        private Mock<ICurrencyRepository> currencyRepositoryMock;
+        private readonly Mock<ICurrencyRepository> currencyRepositoryMock;
 
         public CurrenciesServiceTests()
         {

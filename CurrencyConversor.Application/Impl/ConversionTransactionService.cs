@@ -81,11 +81,12 @@ namespace CurrencyConversor.Application.Impl
         {
             if (currencyCode == null) 
                 throw new ArgumentNullException(nameof(currencyCode));
-
+            
             var currencyObject = await currencyRepository.Get(currencyCode);
-
+            
             if (currencyObject == null)
-                throw new InvalidOperationException($"Currency code '{currencyCode}' not available for conversion.");
+                throw new HttpRequestException($"Currency code '{currencyCode}' not available for conversion.",
+                    null, HttpStatusCode.BadRequest);
 
             return currencyObject;
         }

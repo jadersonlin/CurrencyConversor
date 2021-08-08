@@ -3,6 +3,7 @@ using CurrencyConversor.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace CurrencyConversor.API.Controllers
 {
@@ -23,6 +24,8 @@ namespace CurrencyConversor.API.Controllers
 
         [HttpGet]
         [Route("success")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetAllSuccessTransactionsResult>> GetSuccessTransactions()
         {
             var result = await conversionTransactionService.GetAllSuccessfulTransactions();
@@ -39,6 +42,8 @@ namespace CurrencyConversor.API.Controllers
 
         [HttpGet]
         [Route("failures")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetAllFailureTransactionsResult>> GetFailureTransactions()
         {
             var result = await conversionTransactionService.GetAllFailedTransactions();

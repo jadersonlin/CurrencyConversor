@@ -1,10 +1,8 @@
 ﻿using CurrencyConversor.Domain.Models;
 using CurrencyConversor.Domain.Repositories;
-using System;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CurrencyConversor.Domain.Abstractions;
-using MongoDB.Driver;
 
 namespace CurrencyConversor.Infraestructure.MongoDB
 {

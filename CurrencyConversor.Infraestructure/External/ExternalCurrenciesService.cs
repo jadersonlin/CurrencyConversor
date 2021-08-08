@@ -16,6 +16,7 @@ namespace CurrencyConversor.Infraestructure.External
     {
         private readonly ILogger<ExternalCurrenciesService> logger;
         private readonly string apiUrl;
+        private const string BaseCurrency = "USD";
 
         public ExternalCurrenciesService(IConfiguration configuration, ILogger<ExternalCurrenciesService> logger)
         {
@@ -26,7 +27,9 @@ namespace CurrencyConversor.Infraestructure.External
 
         public async Task<ExternalConversionData> GetConversionRate(string fromCurrency, string toCurrency)
         {
-            var url = apiUrl.Replace("{CommaSeparatedCurrencies}", toCurrency).Replace("{SourceCurrency}", toCurrency);
+            var url = apiUrl
+                .Replace("{CommaSeparatedCurrencies}", fromCurrency + "," + toCurrency)
+                .Replace("{SourceCurrency}", BaseCurrency);
             
             IRestResponse<ApiLayerExchangeSuccessData> response = null;
             ApiLayerExchangeSuccessData responseData = null;
@@ -34,8 +37,7 @@ namespace CurrencyConversor.Infraestructure.External
             try
             {
                 response = await GetResponse(url);
-
-                responseData = response.Data;
+                responseData = JsonConvert.DeserializeObject<ApiLayerExchangeSuccessData>(response.Content);
             }
             catch (Exception ex)
             {
@@ -44,16 +46,19 @@ namespace CurrencyConversor.Infraestructure.External
 
             if (responseData == null || !responseData.Success)
             {
+
                 ReportError(fromCurrency, toCurrency, response);
                 return null;
             }
 
             return new ExternalConversionData
             {
+                BaseCurrency = BaseCurrency,
                 FromCurrency = responseData?.Source,
                 ToCurrency = toCurrency,
-                ConversionRate = responseData?.Quotes[$"{fromCurrency}{toCurrency}"],
-                ConversionTimestamp = responseData?.Timestamp
+                BaseFromConversionRate = responseData.Quotes[$"{BaseCurrency}{fromCurrency}"],
+                BaseToConversionRate = responseData.Quotes[$"{BaseCurrency}{toCurrency}"],
+                ConversionTimestamp = responseData.Timestamp
             };
         }
 

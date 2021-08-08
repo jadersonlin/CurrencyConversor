@@ -28,7 +28,7 @@ namespace CurrencyConversor.Infraestructure.MongoDB
             return await context
                 .Currencies
                 .Find(c => c.Code == code)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task InsertMany(IList<Currency> currencies)

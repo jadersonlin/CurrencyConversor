@@ -40,7 +40,7 @@ namespace CurrencyConversor.Tests.API
                         FromCurrency = "BRL",
                         ToCurrency = "JPY",
                         ConversionRate = (decimal)10.32,
-                        ConversionTimestamp = DateTime.UtcNow.ToFileTimeUtc(),
+                        ConversionTimestamp = DateTime.UtcNow,
                         UserId = Guid.NewGuid().ToString()
                     },
                     new SuccessTransactionDto
@@ -50,7 +50,7 @@ namespace CurrencyConversor.Tests.API
                         FromCurrency = "BRL",
                         ToCurrency = "USD",
                         ConversionRate = (decimal)0.32,
-                        ConversionTimestamp = DateTime.UtcNow.ToFileTimeUtc(),
+                        ConversionTimestamp = DateTime.UtcNow,
                         UserId = Guid.NewGuid().ToString()
                     },
                 }
@@ -85,7 +85,7 @@ namespace CurrencyConversor.Tests.API
                         FromValue = (decimal)4.02,
                         FromCurrency = "BRL",
                         ToCurrency = "JPY",
-                        ConversionTimestamp = DateTime.UtcNow.ToFileTimeUtc(),
+                        ConversionTimestamp = DateTime.UtcNow,
                         UserId = Guid.NewGuid().ToString(),
                         ErrorMessage = "Timeout exception"
                     },
@@ -95,7 +95,7 @@ namespace CurrencyConversor.Tests.API
                         FromValue = (decimal)2.02,
                         FromCurrency = "BRL",
                         ToCurrency = "USD",
-                        ConversionTimestamp = DateTime.UtcNow.ToFileTimeUtc(),
+                        ConversionTimestamp = DateTime.UtcNow,
                         ErrorMessage = "Timeout exception"
                     }
                 }

@@ -28,27 +28,28 @@ namespace CurrencyConversor.Tests.Domain
         public async Task Can_convert_currency(decimal fromValue)
         {
             //Arrange
-            const string fromCurrency = "USD";
+            const string fromCurrency = "EUR";
             const string toCurrency = "BRL";
-            const decimal conversionRate = (decimal)5.213196;
             var userId = Guid.NewGuid().ToString();
 
             var conversionData = new ExternalConversionData
             {
+                BaseCurrency = "USD",
+                BaseFromConversionRate = (decimal)0.850138,
+                BaseToConversionRate = (decimal)5.233504,
                 FromCurrency = fromCurrency,
                 ToCurrency = toCurrency,
-                ConversionTimestamp = new DateTime(2021, 08, 03).ToFileTime(),
-                ConversionRate = conversionRate
+                ConversionTimestamp = new DateTime(2021, 08, 03).ToFileTime()
             };
 
             externalCurrenciesServiceMock.Setup(_ => _.GetConversionRate(fromCurrency, toCurrency)).ReturnsAsync(conversionData);
 
-            var dollar = new Currency(fromCurrency, "US Dollars");
+            var euro = new Currency(fromCurrency, "Euro");
             var reais = new Currency(toCurrency, "Brazilian Reais");
 
             //Act
             var currencyConversionService = new CurrencyConversionService(externalCurrenciesServiceMock.Object, logger);
-            var result = await currencyConversionService.Convert(dollar, reais, fromValue, userId);
+            var result = await currencyConversionService.Convert(euro, reais, fromValue, userId);
 
             //Assert
             Assert.IsAssignableFrom<SuccessTransaction>(result);
@@ -61,6 +62,7 @@ namespace CurrencyConversor.Tests.Domain
             Assert.NotNull(successTransaction.FromCurrency);
             Assert.NotNull(successTransaction.ToCurrency);
             Assert.NotNull(successTransaction.UserId);
+            Assert.NotEqual(0, successTransaction.ConversionRate);
         }
 
         [Fact]
