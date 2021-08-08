@@ -5,8 +5,8 @@ namespace CurrencyConversor.Domain.Repositories
 {
     public interface IUserRepository
     {
-        Task<bool> AnyUserExists();
+        Task<bool> Any();
         Task<bool> Exists(string userId);
-        Task<bool> InsertUser(User user);
+        Task InsertUser(User user);
     }
 }

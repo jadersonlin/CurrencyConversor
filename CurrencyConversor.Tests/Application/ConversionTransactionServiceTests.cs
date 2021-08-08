@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using CurrencyConversor.Application.Dtos;
+﻿using CurrencyConversor.Application.Dtos;
 using CurrencyConversor.Application.Impl;
 using CurrencyConversor.Application.Interfaces;
 using CurrencyConversor.Domain.Interfaces;
@@ -12,6 +7,10 @@ using CurrencyConversor.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CurrencyConversor.Tests.Application
@@ -164,7 +163,7 @@ namespace CurrencyConversor.Tests.Application
 
             Assert.Equal(successTransaction.Id, result.Id);
             Assert.Equal(successTransaction.ConversionRate, result.ConversionRate);
-            Assert.Equal(successTransaction.ConversionTimestamp, result.ConversionTimestamp);
+            Assert.Equal(new DateTime(successTransaction.ConversionTimestamp.Value), result.ConversionTimestamp);
             Assert.Equal(successTransaction.FromCurrency, result.FromCurrency);
             Assert.Equal(successTransaction.FromValue, result.FromValue);
             Assert.Equal(successTransaction.ToCurrency, result.ToCurrency);

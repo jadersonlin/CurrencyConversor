@@ -1,11 +1,17 @@
+using CurrencyConversor.Application.Impl;
+using CurrencyConversor.Application.Interfaces;
+using CurrencyConversor.Domain.Interfaces;
 using CurrencyConversor.Domain.Models;
 using CurrencyConversor.Domain.Repositories;
+using CurrencyConversor.Domain.Services;
+using CurrencyConversor.Infraestructure.External;
 using CurrencyConversor.Infraestructure.MongoDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace CurrencyConversor.API
@@ -22,7 +28,6 @@ namespace CurrencyConversor.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -37,11 +42,17 @@ namespace CurrencyConversor.API
                     }
                 });
             });
-
+            
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IConversionTransactionService, ConversionTransactionService>();
+            services.AddScoped<ICurrenciesService, CurrenciesService>();
             services.AddScoped<ICurrencyContext, CurrencyContext>();
-            services.AddScoped<ICurrencyRepository, CurrencyMongoDbRepository>();
+            services.AddScoped<ICurrencyConversionService, CurrencyConversionService>();
+            services.AddScoped<IExternalCurrenciesService, ExternalCurrenciesService>();
             services.AddScoped(typeof(IConversionTransactionRepository<SuccessTransaction>), typeof(SuccessTransactionMongoDbRepository<SuccessTransaction>));
             services.AddScoped(typeof(IConversionTransactionRepository<FailureTransaction>), typeof(FailureTransactionMongoDbRepository<FailureTransaction>));
+            services.AddScoped<ICurrencyRepository, CurrencyMongoDbRepository>();
+            services.AddScoped<IUserRepository, UserMongoDbRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

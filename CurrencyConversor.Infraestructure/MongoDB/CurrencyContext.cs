@@ -12,16 +12,19 @@ namespace CurrencyConversor.Infraestructure.MongoDB
             var client = new MongoClient(configuration.GetSection("MongoDb:ConnectionString").Value);
             var database = client.GetDatabase(configuration.GetSection("MongoDb:Database").Value);
 
-            Currencies = database.GetCollection<Currency>("products");
+            Currencies = database.GetCollection<Currency>("currencies");
             SuccessTransactions = database.GetCollection<SuccessTransaction>("success");
             FailureTransactions = database.GetCollection<FailureTransaction>("failure");
+            Users = database.GetCollection<User>("users");
 
             PopulateAvailableCurrencies();
+            PopulateUsers();
         }
 
         public IMongoCollection<Currency> Currencies { get; }
         public IMongoCollection<SuccessTransaction> SuccessTransactions { get; }
         public IMongoCollection<FailureTransaction> FailureTransactions { get; }
+        public IMongoCollection<User> Users { get; }
 
         private void PopulateAvailableCurrencies()
         {
@@ -41,12 +44,27 @@ namespace CurrencyConversor.Infraestructure.MongoDB
                 new Currency("MXN", "Mexican Peso"),
                 new Currency("RUB", "Russian Ruble"),
                 new Currency("TRY", "Turkish Lira"),
+                new Currency("USD", "US Dollar"),
             };
 
             var hasItems = Currencies.Find(c => true).Any();
 
             if (!hasItems)
                 Currencies.InsertMany(currencies);
+        }
+
+        private void PopulateUsers()
+        {
+            var users = new List<User>
+            {
+                new User{ UserId = "78820307-844c-410a-935d-9ee90464d061" },
+                new User{ UserId = "2de9b266-e987-49c1-b791-a485d6ce757d" }
+            };
+
+            var hasItems = Users.Find(c => true).Any();
+
+            if (!hasItems)
+                Users.InsertMany(users);
         }
     }
 }

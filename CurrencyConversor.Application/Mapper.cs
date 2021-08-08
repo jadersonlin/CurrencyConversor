@@ -1,4 +1,5 @@
-﻿using CurrencyConversor.Application.Dtos;
+﻿using System;
+using CurrencyConversor.Application.Dtos;
 using CurrencyConversor.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace CurrencyConversor.Application
                     FromValue = t.FromValue.Value,
                     FromCurrency = t.FromCurrency,
                     ToCurrency = t.ToCurrency,
-                    ConversionTimestamp = t.ConversionTimestamp.Value,
+                    ConversionTimestamp = new DateTime(t.ConversionTimestamp.Value),
                     UserId = t.UserId,
                     ConversionRate = t.ConversionRate
                 }).ToList()
@@ -35,7 +36,7 @@ namespace CurrencyConversor.Application
                     FromValue = t.FromValue,
                     FromCurrency = t.FromCurrency,
                     ToCurrency = t.ToCurrency,
-                    ConversionTimestamp = t.ConversionTimestamp,
+                    ConversionTimestamp = new DateTime(t.ConversionTimestamp.Value),
                     ErrorMessage = t.ErrorMessage,
                     UserId = t.UserId
                 }).ToList()
@@ -51,7 +52,7 @@ namespace CurrencyConversor.Application
                 FromCurrency = transaction.FromCurrency,
                 ToCurrency = transaction.ToCurrency,
                 ConversionRate = transaction.ConversionRate,
-                ConversionTimestamp = transaction.ConversionTimestamp.Value,
+                ConversionTimestamp = new DateTime(transaction.ConversionTimestamp.Value),
                 UserId = transaction.UserId,
                 Message = "Sucess!"
             };

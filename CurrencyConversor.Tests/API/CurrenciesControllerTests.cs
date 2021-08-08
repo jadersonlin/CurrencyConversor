@@ -16,7 +16,6 @@ namespace CurrencyConversor.Tests.API
     {
         private readonly Mock<IConversionTransactionService> conversionTransactionServiceMock;
         private readonly Mock<ICurrenciesService> currenciesServiceMock;
-        private readonly ILogger<CurrenciesController> logger;
         private readonly CurrenciesController controller;
 
         public CurrenciesControllerTests()
@@ -24,7 +23,7 @@ namespace CurrencyConversor.Tests.API
             conversionTransactionServiceMock = new Mock<IConversionTransactionService>();
             currenciesServiceMock = new Mock<ICurrenciesService>();
             ILoggerFactory nullLoggerFactory = new NullLoggerFactory();
-            logger = nullLoggerFactory.CreateLogger<CurrenciesController>();
+            var logger = nullLoggerFactory.CreateLogger<CurrenciesController>();
 
             controller = new CurrenciesController(conversionTransactionServiceMock.Object,
                 currenciesServiceMock.Object, logger);
@@ -113,7 +112,7 @@ namespace CurrencyConversor.Tests.API
                 FromCurrency = fromCurrency,
                 ToCurrency = toCurrency,
                 ConversionRate = (decimal)5.32,
-                ConversionTimestamp = DateTime.UtcNow.ToFileTimeUtc(),
+                ConversionTimestamp = DateTime.UtcNow,
                 UserId = userId,
                 Message = "Success!"
             };
