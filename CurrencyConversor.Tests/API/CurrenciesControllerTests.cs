@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using CurrencyConversor.API.Controllers;
 using CurrencyConversor.Application.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -179,6 +181,25 @@ namespace CurrencyConversor.Tests.API
 
             //Assert
             await Assert.ThrowsAsync<InvalidCastException>(() => controller.GetConversion(fromValue, fromCurrency, toCurrency, userId));
+        }
+
+        [Fact]
+        public async Task Try_GET_conversion_inserting_invalid_currency()
+        {
+            //Arrange
+            const string fromCurrency = "ASD";
+            const string toCurrency = "BRL";
+            const decimal fromValue = (decimal)65345106.01;
+            var userId = Guid.NewGuid().ToString();
+
+            conversionTransactionServiceMock
+                .Setup(_ => _.RequestConversion(fromCurrency, toCurrency, fromValue, userId))
+                .ThrowsAsync(new HttpRequestException("Currency is not valid.", null, HttpStatusCode.BadRequest));
+
+            var result = await controller.GetConversion(fromValue, fromCurrency, toCurrency, userId);
+            
+            //Assert
+            Assert.IsAssignableFrom<BadRequestObjectResult>(result.Result);
         }
     }
 }

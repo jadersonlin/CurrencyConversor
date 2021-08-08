@@ -35,7 +35,6 @@ namespace CurrencyConversor.API.Controllers
         {
             var result = await currenciesService.GetAvailableCurrencies();
 
-            logger.LogInformation("Test.");
             return result != null ? Ok(result) : NotFound(nameof(Get));
         }
 
