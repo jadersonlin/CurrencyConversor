@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CurrencyConversor.API.Controllers
 {
-    [Route("transactions")]
+    [Route("api/transactions")]
     [ApiController]
     [Produces("application/json")]
     public class TransactionsController : ControllerBase
@@ -22,6 +22,10 @@ namespace CurrencyConversor.API.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// Get collection of all succesful transactions.
+        /// </summary>
+        /// <returns>Successful transactions data.</returns>
         [HttpGet]
         [Route("success")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -40,6 +44,10 @@ namespace CurrencyConversor.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Get collection of all failed transactions.
+        /// </summary>
+        /// <returns>Failed transactions data.</returns>
         [HttpGet]
         [Route("failures")]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -18,10 +18,11 @@ namespace CurrencyConversor.Application
                     FromValue = t.FromValue.Value,
                     FromCurrency = t.FromCurrency,
                     ToCurrency = t.ToCurrency,
-                    ConversionTimestamp = new DateTime(t.ConversionTimestamp.Value),
+                    ConversionTimestamp = DateTimeOffset.FromUnixTimeSeconds(t.ConversionTimestamp.Value).UtcDateTime,
                     UserId = t.UserId,
                     ConversionRate = t.ConversionRate
-                }).ToList()
+                }).ToList(),
+                Message = "Success!"
             };
         }
 
@@ -36,10 +37,11 @@ namespace CurrencyConversor.Application
                     FromValue = t.FromValue,
                     FromCurrency = t.FromCurrency,
                     ToCurrency = t.ToCurrency,
-                    ConversionTimestamp = new DateTime(t.ConversionTimestamp.Value),
+                    ConversionTimestamp = DateTimeOffset.FromUnixTimeSeconds(t.ConversionTimestamp.Value).UtcDateTime,
                     ErrorMessage = t.ErrorMessage,
                     UserId = t.UserId
-                }).ToList()
+                }).ToList(),
+                Message = "Success!"
             };
         }
 
@@ -52,7 +54,7 @@ namespace CurrencyConversor.Application
                 FromCurrency = transaction.FromCurrency,
                 ToCurrency = transaction.ToCurrency,
                 ConversionRate = transaction.ConversionRate,
-                ConversionTimestamp = new DateTime(transaction.ConversionTimestamp.Value),
+                ConversionTimestamp = DateTimeOffset.FromUnixTimeSeconds(transaction.ConversionTimestamp.Value).DateTime,
                 UserId = transaction.UserId,
                 Message = "Sucess!"
             };
