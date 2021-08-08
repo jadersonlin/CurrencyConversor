@@ -17,3 +17,5 @@ _ReSharper.*
 Ankh.NoLoad
 .vs
 tools
+data
+dockerdata

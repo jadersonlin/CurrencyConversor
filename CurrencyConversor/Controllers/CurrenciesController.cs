@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace CurrencyConversor.API.Controllers
 {
+    /// <summary>
+    /// Conversion os currency in another one.
+    /// </summary>
     [ApiController]
     [Route("api/currencies")]
     [Produces("application/json")]
@@ -28,6 +31,10 @@ namespace CurrencyConversor.API.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// Get available currencies for conversion.
+        /// </summary>
+        /// <returns>Available currencies.</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -38,6 +45,14 @@ namespace CurrencyConversor.API.Controllers
             return result != null ? Ok(result) : NotFound(nameof(Get));
         }
 
+        /// <summary>
+        /// Convert a value from a currency to another and returns conversion data.
+        /// </summary>
+        /// <param name="fromValue"></param>
+        /// <param name="fromCurrency"></param>
+        /// <param name="toCurrency"></param>
+        /// <param name="userId"></param>
+        /// <returns>Conversion data, including the conversion rate and converted value.</returns>
         [HttpGet]
         [Route("conversion")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -51,12 +66,24 @@ namespace CurrencyConversor.API.Controllers
 
             try
             {
-                result = await conversionTransactionService.RequestConversion(fromCurrency, toCurrency, fromValue, userId);
+                result = await conversionTransactionService.RequestConversion(fromCurrency, toCurrency, fromValue,
+                    userId);
             }
             catch (HttpRequestException ex)
             {
+                logger.LogError($"Error in {nameof(GetConversion)}: ", ex);
+
                 if (ex.StatusCode == HttpStatusCode.BadRequest)
+                {
                     return BadRequest(ex.Message);
+                }
+
+                throw;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Error in {nameof(GetConversion)}: ", ex);
+                throw;
             }
 
             return result != null ? Ok(result) : NotFound(nameof(GetConversion));
