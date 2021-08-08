@@ -4,5 +4,38 @@
         <name>CurrencyConversor.API</name>
     </assembly>
     <members>
+        <member name="T:CurrencyConversor.API.Controllers.CurrenciesController">
+            <summary>
+            Conversion os currency in another one.
+            </summary>
+        </member>
+        <member name="M:CurrencyConversor.API.Controllers.CurrenciesController.Get">
+            <summary>
+            Get available currencies for conversion.
+            </summary>
+            <returns>Available currencies.</returns>
+        </member>
+        <member name="M:CurrencyConversor.API.Controllers.CurrenciesController.GetConversion(System.Decimal,System.String,System.String,System.String)">
+            <summary>
+            Convert a value from a currency to another and returns conversion data.
+            </summary>
+            <param name="fromValue"></param>
+            <param name="fromCurrency"></param>
+            <param name="toCurrency"></param>
+            <param name="userId"></param>
+            <returns>Conversion data, including the conversion rate and converted value.</returns>
+        </member>
+        <member name="M:CurrencyConversor.API.Controllers.TransactionsController.GetSuccessTransactions">
+            <summary>
+            Get collection of all succesful transactions.
+            </summary>
+            <returns>Successful transactions data.</returns>
+        </member>
+        <member name="M:CurrencyConversor.API.Controllers.TransactionsController.GetFailureTransactions">
+            <summary>
+            Get collection of all failed transactions.
+            </summary>
+            <returns>Failed transactions data.</returns>
+        </member>
     </members>
 </doc>

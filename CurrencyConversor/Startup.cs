@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using CurrencyConversor.Application.Impl;
 using CurrencyConversor.Application.Interfaces;
 using CurrencyConversor.Domain.Interfaces;
@@ -31,6 +34,7 @@ namespace CurrencyConversor.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
+                c.IncludeXmlComments(GetXmlCommentsFilePath());
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
@@ -59,11 +63,10 @@ namespace CurrencyConversor.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CurrencyConversor v1"));
-            }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CurrencyConversor v1"));
 
             app.UseHttpsRedirection();
 
@@ -75,6 +78,13 @@ namespace CurrencyConversor.API
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static string GetXmlCommentsFilePath()
+        {
+            var basePath = AppContext.BaseDirectory;
+            var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+            return Path.Combine(basePath, fileName);
         }
     }
 }
