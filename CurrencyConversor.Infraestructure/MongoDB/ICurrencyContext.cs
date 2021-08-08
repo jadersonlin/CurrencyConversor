@@ -10,5 +10,7 @@ namespace CurrencyConversor.Infraestructure.MongoDB
         IMongoCollection<SuccessTransaction> SuccessTransactions { get; }
 
         IMongoCollection<FailureTransaction> FailureTransactions { get; }
+
+        IMongoCollection<User> Users { get; }
     }
 }
