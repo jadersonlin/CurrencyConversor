@@ -20,11 +20,12 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    
     - task: DockerCompose@0
       inputs:
         containerregistrytype: 'Container Registry'
         dockerComposeFile: '**/docker-compose.yml'
-        action: 'Build services'
+        action: 'Push services'
 
     - task: VisualStudioTestPlatformInstaller@1
       inputs:
